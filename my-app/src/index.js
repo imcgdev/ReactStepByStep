@@ -2,7 +2,28 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 class Welcome extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({ date: new Date() });
+  }
+
   render() {
+    function FormattedDate(props) {
+      return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
+    }
+
     function formatName(user) {
       return user.firstName + " " + user.lastName;
     }
@@ -19,7 +40,7 @@ class Welcome extends React.Component {
       <div className="element">
         {getGreeting(this.props.user)}
         <h2>Good to see you here!</h2>
-        <h2>It is {this.props.time}.</h2>
+        <FormattedDate date={this.state.date} />
       </div>
     );
   }
@@ -29,21 +50,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Welcome
-          user={{ firstName: "Ian", lastName: "McGregor" }}
-          time={new Date().toLocaleTimeString()}
-        />
-        <Welcome
-          user={{ firstName: "Sarah", lastName: "Leffler" }}
-          time={new Date().toLocaleTimeString()}
-        />
+        <Welcome user={{ firstName: "Ian", lastName: "McGregor" }} />
+        <Welcome user={{ firstName: "Sarah", lastName: "Leffler" }} />
       </div>
     );
   }
 }
 
-function tick() {
-  ReactDOM.render(<App />, document.getElementById("root"));
-}
-
-setInterval(tick, 1000);
+ReactDOM.render(<App />, document.getElementById("root"));
