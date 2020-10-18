@@ -18,18 +18,23 @@ const user = {
   lastName: "McGregor",
 };
 
-const element = (
-  <div className="element">
-    {getGreeting(user)}
+function tick() {
+  const element = (
+    <div className="element">
+      {getGreeting(user)}
+      <h2>Good to see you here!</h2>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+
+  const nonJSX = React.createElement(
+    "div",
+    { className: "element" },
+    getGreeting(user),
     <h2>Good to see you here!</h2>
-  </div>
-);
+  );
 
-const sameElement = React.createElement(
-  "div",
-  { className: "element" },
-  getGreeting(user),
-  <h2>Good to see you here!</h2>
-);
+  ReactDOM.render(element, document.getElementById("root"));
+}
 
-ReactDOM.render(sameElement, document.getElementById("root"));
+setInterval(tick, 1000);
