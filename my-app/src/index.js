@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Toggle from "./toggle.js";
 
 class Welcome extends React.Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class App extends React.Component {
     return (
       <div>
         <Welcome user={{ firstName: "Ian", lastName: "McGregor" }} />
-        <Welcome user={{ firstName: "Sarah", lastName: "Leffler" }} />
+        <Toggle></Toggle>
       </div>
     );
   }
