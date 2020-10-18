@@ -1,40 +1,49 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-function formatName(user) {
-  return user.firstName + " " + user.lastName;
-}
+class Welcome extends React.Component {
+  render() {
+    function formatName(user) {
+      return user.firstName + " " + user.lastName;
+    }
 
-function getGreeting(user) {
-  if (user) {
-    return <h1>Hello, {formatName(user)}</h1>;
+    function getGreeting(user) {
+      if (user) {
+        return <h1>Hello, {formatName(user)}</h1>;
+      }
+
+      return <h1>Hello, Stranger</h1>;
+    }
+
+    return (
+      <div className="element">
+        {getGreeting(this.props.user)}
+        <h2>Good to see you here!</h2>
+        <h2>It is {this.props.time}.</h2>
+      </div>
+    );
   }
-
-  return <h1>Hello, Stranger</h1>;
 }
 
-const user = {
-  firstName: "Ian",
-  lastName: "McGregor",
-};
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <Welcome
+          user={{ firstName: "Ian", lastName: "McGregor" }}
+          time={new Date().toLocaleTimeString()}
+        />
+        <Welcome
+          user={{ firstName: "Sarah", lastName: "Leffler" }}
+          time={new Date().toLocaleTimeString()}
+        />
+      </div>
+    );
+  }
+}
 
 function tick() {
-  const element = (
-    <div className="element">
-      {getGreeting(user)}
-      <h2>Good to see you here!</h2>
-      <h2>It is {new Date().toLocaleTimeString()}.</h2>
-    </div>
-  );
-
-  const nonJSX = React.createElement(
-    "div",
-    { className: "element" },
-    getGreeting(user),
-    <h2>Good to see you here!</h2>
-  );
-
-  ReactDOM.render(element, document.getElementById("root"));
+  ReactDOM.render(<App />, document.getElementById("root"));
 }
 
 setInterval(tick, 1000);
